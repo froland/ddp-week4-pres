@@ -1,0 +1,54 @@
+Consumer Price Index
+========================================================
+author: Francois ROLAND
+date: 2017-01-29
+autosize: true
+transition: rotate
+
+```{r, echo = FALSE}
+library(ggplot2)
+cpi_ppi <- read.csv("cpi_ppi.csv")
+```
+
+<style>
+.reveal h3 {
+  color: #900;
+}
+</style>
+
+Web application UI
+========================================================
+
+![application screenshot](screenshot.png)
+
+Original data
+========================================================
+The data come from the USA Bureau of Labor Statistics. They contain, for each year between 1974 and 2016, the Consumer Price Index for all food and the Producer Price Indexes for 3 different type of foods:
+- Crude foodstuffs and feedstuffs
+- Intermediate foods and feeds
+- Finished consumer foods
+
+Models
+========================================================
+Model 1 uses a single predictor:
+```{r}
+model1 <- lm(CPI_all_food ~ PPI_Crude_foodstuffs_feedstuffs, data = cpi_ppi)
+```
+
+Model 2 uses 3 predictors:
+```{r}
+model2 <- lm(CPI_all_food ~ PPI_Crude_foodstuffs_feedstuffs +
+               PPI_Intermediate_foods_feeds +
+               PPI_Finished_consumer_foods, data = cpi_ppi)
+```
+
+Residuals
+=========================================================
+```{r}
+plot(resid(model1), ylim = c(-5, 10))
+```
+***
+```{r}
+plot(resid(model2), ylim = c(-5, 10))
+```
+
